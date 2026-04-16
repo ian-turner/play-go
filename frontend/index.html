@@ -9,17 +9,11 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-chess-board"></i> Go Game</h1>
-            <p class="subtitle">Play against GNU Go engine</p>
-        </header>
-        
         <div class="game-container">
             <div class="board-container">
                 <div class="board-header">
-                    <h2>Board</h2>
                     <div class="board-size-selector">
-                        <label>Size:</label>
+                        <label>Board size:</label>
                         <select id="board-size">
                             <option value="9">9x9</option>
                             <option value="13">13x13</option>
@@ -28,17 +22,16 @@
                     </div>
                 </div>
                 <div class="board-wrapper">
-                    <canvas id="go-board" width="600" height="600"></canvas>
-                    <div class="board-overlay" id="board-overlay"></div>
+                    <div id="go-board" class="dom-board"></div>
                 </div>
                 <div class="board-status">
                     <div class="status-item">
                         <span class="status-label">Player:</span>
-                        <span id="player-color" class="stone black-stone">Black</span>
+                        <span id="player-color" class="stone-indicator black-stone">Black</span>
                     </div>
                     <div class="status-item">
                         <span class="status-label">Computer:</span>
-                        <span id="computer-color" class="stone white-stone">White</span>
+                        <span id="computer-color" class="stone-indicator white-stone">White</span>
                     </div>
                     <div class="status-item">
                         <span class="status-label">Game:</span>
@@ -48,23 +41,30 @@
             </div>
             
             <div class="controls-panel">
+                <div class="control-section title-section">
+                    <h1><i class="fas fa-chess-board"></i> Go Game</h1>
+                    <p class="subtitle">Play against GNU Go engine</p>
+                </div>
+                
                 <div class="control-section">
-                    <h3><i class="fas fa-cog"></i> Game Settings</h3>
+                    <h3><i class="fas fa-cog"></i> Settings</h3>
                     <div class="form-group">
                         <label for="difficulty">Difficulty (1-10):</label>
-                        <input type="range" id="difficulty" min="1" max="10" value="5">
-                        <span id="difficulty-value">5</span>
+                        <div class="slider-container">
+                            <input type="range" id="difficulty" min="1" max="10" value="5">
+                            <span id="difficulty-value">5</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Play as:</label>
                         <div class="color-options">
                             <label class="radio-option">
                                 <input type="radio" name="player-color" value="black" checked>
-                                <span class="stone black-stone"></span> Black
+                                <span class="stone-indicator black-stone"></span> Black
                             </label>
                             <label class="radio-option">
                                 <input type="radio" name="player-color" value="white">
-                                <span class="stone white-stone"></span> White
+                                <span class="stone-indicator white-stone"></span> White
                             </label>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                 </div>
                 
                 <div class="control-section">
-                    <h3><i class="fas fa-gamepad"></i> Game Actions</h3>
+                    <h3><i class="fas fa-gamepad"></i> Actions</h3>
                     <div class="action-buttons">
                         <button id="pass-btn" class="btn btn-secondary">
                             <i class="fas fa-forward"></i> Pass
@@ -82,12 +82,9 @@
                         <button id="resign-btn" class="btn btn-danger">
                             <i class="fas fa-flag"></i> Resign
                         </button>
-                        <button id="undo-btn" class="btn btn-secondary" disabled>
-                            <i class="fas fa-undo"></i> Undo
-                        </button>
                     </div>
                     <div class="hint">
-                        <i class="fas fa-mouse-pointer"></i> Click on board to place a stone
+                        <i class="fas fa-mouse-pointer"></i> Click intersection to place stone
                     </div>
                 </div>
                 
@@ -106,10 +103,6 @@
                             <span class="info-label">Score:</span>
                             <span id="score">-</span>
                         </div>
-                        <div class="info-item">
-                            <span class="info-label">Game ID:</span>
-                            <span id="game-id" class="mono">-</span>
-                        </div>
                     </div>
                 </div>
                 
@@ -121,10 +114,6 @@
                 </div>
             </div>
         </div>
-        
-        <footer>
-            <p>Powered by GNU Go engine | <a href="https://www.gnu.org/software/gnugo/" target="_blank">About GNU Go</a></p>
-        </footer>
     </div>
     
     <script src="app.js"></script>
