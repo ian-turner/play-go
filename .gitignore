@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+backend/venv/
+
+# Logs
+*.log
+server.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Server PID
+backend/server.pid
+
+# Frontend build artifacts (if any)
+node_modules/
+npm-debug.log*

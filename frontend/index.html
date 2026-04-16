@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Game with GNU Go</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-chess-board"></i> Go Game</h1>
+            <p class="subtitle">Play against GNU Go engine</p>
+        </header>
+        
+        <div class="game-container">
+            <div class="board-container">
+                <div class="board-header">
+                    <h2>Board</h2>
+                    <div class="board-size-selector">
+                        <label>Size:</label>
+                        <select id="board-size">
+                            <option value="9">9x9</option>
+                            <option value="13">13x13</option>
+                            <option value="19" selected>19x19</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="board-wrapper">
+                    <canvas id="go-board" width="600" height="600"></canvas>
+                    <div class="board-overlay" id="board-overlay"></div>
+                </div>
+                <div class="board-status">
+                    <div class="status-item">
+                        <span class="status-label">Player:</span>
+                        <span id="player-color" class="stone black-stone">Black</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Computer:</span>
+                        <span id="computer-color" class="stone white-stone">White</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Game:</span>
+                        <span id="game-status" class="status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls-panel">
+                <div class="control-section">
+                    <h3><i class="fas fa-cog"></i> Game Settings</h3>
+                    <div class="form-group">
+                        <label for="difficulty">Difficulty (1-10):</label>
+                        <input type="range" id="difficulty" min="1" max="10" value="5">
+                        <span id="difficulty-value">5</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Play as:</label>
+                        <div class="color-options">
+                            <label class="radio-option">
+                                <input type="radio" name="player-color" value="black" checked>
+                                <span class="stone black-stone"></span> Black
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="player-color" value="white">
+                                <span class="stone white-stone"></span> White
+                            </label>
+                        </div>
+                    </div>
+                    <button id="new-game-btn" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> New Game
+                    </button>
+                </div>
+                
+                <div class="control-section">
+                    <h3><i class="fas fa-gamepad"></i> Game Actions</h3>
+                    <div class="action-buttons">
+                        <button id="pass-btn" class="btn btn-secondary">
+                            <i class="fas fa-forward"></i> Pass
+                        </button>
+                        <button id="resign-btn" class="btn btn-danger">
+                            <i class="fas fa-flag"></i> Resign
+                        </button>
+                        <button id="undo-btn" class="btn btn-secondary" disabled>
+                            <i class="fas fa-undo"></i> Undo
+                        </button>
+                    </div>
+                    <div class="hint">
+                        <i class="fas fa-mouse-pointer"></i> Click on board to place a stone
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h3><i class="fas fa-info-circle"></i> Game Info</h3>
+                    <div class="info-box">
+                        <div class="info-item">
+                            <span class="info-label">Moves:</span>
+                            <span id="move-count">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Last Move:</span>
+                            <span id="last-move">None</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Score:</span>
+                            <span id="score">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Game ID:</span>
+                            <span id="game-id" class="mono">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h3><i class="fas fa-history"></i> Move Log</h3>
+                    <div class="log-box" id="move-log">
+                        <div class="log-entry">Game started</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Powered by GNU Go engine | <a href="https://www.gnu.org/software/gnugo/" target="_blank">About GNU Go</a></p>
+        </footer>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
