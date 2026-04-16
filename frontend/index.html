@@ -11,33 +11,11 @@
     <div class="container">
         <div class="game-container">
             <div class="board-container">
-                <div class="board-header">
-                    <div class="board-size-selector">
-                        <label>Board size:</label>
-                        <select id="board-size">
-                            <option value="9">9x9</option>
-                            <option value="13">13x13</option>
-                            <option value="19" selected>19x19</option>
-                        </select>
-                    </div>
-                </div>
+                <div class="board-header"></div>
                 <div class="board-wrapper">
                     <div id="go-board" class="dom-board"></div>
                 </div>
-                <div class="board-status">
-                    <div class="status-item">
-                        <span class="status-label">Player:</span>
-                        <span id="player-color" class="stone-indicator black-stone">Black</span>
-                    </div>
-                    <div class="status-item">
-                        <span class="status-label">Computer:</span>
-                        <span id="computer-color" class="stone-indicator white-stone">White</span>
-                    </div>
-                    <div class="status-item">
-                        <span class="status-label">Game:</span>
-                        <span id="game-status" class="status-active">Active</span>
-                    </div>
-                </div>
+
             </div>
             
             <div class="controls-panel">
@@ -46,8 +24,16 @@
                     <p class="subtitle">Play against GNU Go engine</p>
                 </div>
                 
-                <div class="control-section">
+                <div class="control-section" id="settings-section">
                     <h3><i class="fas fa-cog"></i> Settings</h3>
+                    <div class="form-group">
+                        <label for="board-size">Board size:</label>
+                        <select id="board-size">
+                            <option value="9">9x9</option>
+                            <option value="13">13x13</option>
+                            <option value="19" selected>19x19</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="difficulty">Difficulty (1-10):</label>
                         <div class="slider-container">
@@ -73,7 +59,7 @@
                     </button>
                 </div>
                 
-                <div class="control-section">
+                <div class="control-section hidden" id="actions-section">
                     <h3><i class="fas fa-gamepad"></i> Actions</h3>
                     <div class="action-buttons">
                         <button id="pass-btn" class="btn btn-secondary">
@@ -88,9 +74,21 @@
                     </div>
                 </div>
                 
-                <div class="control-section">
+                <div class="control-section hidden" id="game-info-section">
                     <h3><i class="fas fa-info-circle"></i> Game Info</h3>
                     <div class="info-box">
+                        <div class="info-item">
+                            <span class="info-label">Player:</span>
+                            <span id="player-color" class="stone-indicator black-stone">Black</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Computer:</span>
+                            <span id="computer-color" class="stone-indicator white-stone">White</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Game:</span>
+                            <span id="game-status" class="status-active">Active</span>
+                        </div>
                         <div class="info-item">
                             <span class="info-label">Moves:</span>
                             <span id="move-count">0</span>

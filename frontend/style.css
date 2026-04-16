@@ -41,33 +41,22 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #1e293b;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
-.board-size-selector {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.board-size-selector label {
-    font-weight: 500;
-    color: #94a3b8;
-    font-size: 0.9rem;
-}
-
-.board-size-selector select {
+.form-group select {
     background: #1e293b;
     color: #e2e8f0;
     border: 1px solid #334155;
     padding: 6px 10px;
     font-size: 0.9rem;
     min-width: 80px;
+    width: 100%;
 }
 
-.board-size-selector select:focus {
+.form-group select:focus {
     outline: none;
     border-color: #3b82f6;
 }
@@ -346,13 +335,21 @@ body {
     font-size: 0.9rem;
 }
 
-.radio-option input {
-    cursor: pointer;
+.radio-option input[type="radio"] {
+    display: none;
 }
 
 .radio-option .stone-indicator {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #475569;
+    border-radius: 50%;
+    transition: border-color 0.2s;
+}
+
+.radio-option input[type="radio"]:checked + .stone-indicator {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
 }
 
 .btn {
@@ -490,6 +487,10 @@ body {
     .dom-board {
         aspect-ratio: 1 / 1;
     }
+}
+
+.hidden {
+    display: none !important;
 }
 
 @media (max-width: 700px) {

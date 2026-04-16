@@ -380,6 +380,21 @@ class GoGame {
     }
     
     updateUI() {
+        // Toggle sidebar sections based on game state
+        const settingsSection = document.getElementById('settings-section');
+        const actionsSection = document.getElementById('actions-section');
+        const gameInfoSection = document.getElementById('game-info-section');
+        
+        if (this.gameActive) {
+            settingsSection.classList.add('hidden');
+            actionsSection.classList.remove('hidden');
+            gameInfoSection.classList.remove('hidden');
+        } else {
+            settingsSection.classList.remove('hidden');
+            actionsSection.classList.add('hidden');
+            gameInfoSection.classList.add('hidden');
+        }
+        
         // Update player/computer colors
         const playerColorEl = document.getElementById('player-color');
         playerColorEl.textContent = this.playerColor;
