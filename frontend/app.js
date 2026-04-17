@@ -400,33 +400,29 @@ class GoGame {
     }
     
     updateUI() {
-        // Toggle sidebar sections based on game state
+        // Toggle sidebar sections based on game state and game existence
         const settingsSection = document.getElementById('settings-section');
         const actionsSection = document.getElementById('actions-section');
-        const gameInfoSection = document.getElementById('game-info-section');
+        const gameStatusSection = document.getElementById('game-status-section');
+        // Game status section shows when a game exists (gameId not null)
         
         this.updatePlayerDisplay();
         
         if (this.gameActive) {
             settingsSection.classList.add('hidden');
             actionsSection.classList.remove('hidden');
-            gameInfoSection.classList.remove('hidden');
         } else {
             settingsSection.classList.remove('hidden');
             actionsSection.classList.add('hidden');
-            gameInfoSection.classList.add('hidden');
         }
         
-        // Update player/computer colors
-        const playerIndicator = document.getElementById('player-color-indicator');
-        const playerText = document.getElementById('player-color-text');
-        playerIndicator.className = `stone-indicator ${this.playerColor}-stone`;
-        playerText.textContent = this.playerColor.charAt(0).toUpperCase() + this.playerColor.slice(1);
+        if (this.gameId) {
+            gameStatusSection.classList.remove('hidden');
+        } else {
+            gameStatusSection.classList.add('hidden');
+        }
         
-        const computerIndicator = document.getElementById('computer-color-indicator');
-        const computerText = document.getElementById('computer-color-text');
-        computerIndicator.className = `stone-indicator ${this.computerColor}-stone`;
-        computerText.textContent = this.computerColor.charAt(0).toUpperCase() + this.computerColor.slice(1);
+
         
         // Update board header status
         const playerStatusIndicator = document.getElementById('player-status-indicator');
@@ -443,16 +439,7 @@ class GoGame {
         document.getElementById('black-captures').textContent = this.capturesBlack;
         document.getElementById('white-captures').textContent = this.capturesWhite;
         
-        // Update game status
-        const gameStatus = document.getElementById('game-status');
-        gameStatus.textContent = this.gameActive ? 'Active' : 'Ended';
-        gameStatus.className = this.gameActive ? 'status-active' : 'status-ended';
-        
-        // Update move count
-        document.getElementById('move-count').textContent = this.moveCount;
-        
-        // Update last move
-        document.getElementById('last-move').textContent = this.lastMove || 'None';
+
         
         // Enable/disable buttons
         document.getElementById('pass-btn').disabled = !this.gameActive;

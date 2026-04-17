@@ -15,37 +15,7 @@
                 <div class="board-wrapper">
                     <div id="go-board" class="dom-board"></div>
                 </div>
-                <div class="board-footer">
-                    <div class="board-status">
-                        <div class="status-item">
-                            <span class="status-label">Player</span>
-                            <span class="status-value">
-                                <span class="stone-indicator black-stone" id="player-status-indicator"></span>
-                                <span id="player-status-text">Black</span>
-                            </span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-label">Captures</span>
-                            <span class="status-value">
-                                <span class="capture-pair">
-                                    <span class="stone-indicator black-stone"></span>
-                                    <span id="black-captures">0</span>
-                                </span>
-                                <span class="capture-pair">
-                                    <span class="stone-indicator white-stone"></span>
-                                    <span id="white-captures">0</span>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-label">Computer</span>
-                            <span class="status-value">
-                                <span class="stone-indicator white-stone" id="computer-status-indicator"></span>
-                                <span id="computer-status-text">White</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+
 
             </div>
             
@@ -105,38 +75,35 @@
                     </div>
                 </div>
                 
-                <div class="control-section hidden" id="game-info-section">
-                    <h3><i class="fas fa-info-circle"></i> Game Info</h3>
-                    <div class="info-box">
-                        <div class="info-item">
-                            <span class="info-label">Player:</span>
-                            <span class="info-value">
-                                <span class="stone-indicator black-stone" id="player-color-indicator"></span>
-                                <span id="player-color-text">Black</span>
+                <div class="control-section hidden" id="game-status-section">
+                    <h3><i class="fas fa-info-circle"></i> Game Status</h3>
+                    <div class="board-status sidebar-status">
+                        <div class="status-item">
+                            <span class="status-label">Player</span>
+                            <span class="status-value">
+                                <span class="stone-indicator black-stone" id="player-status-indicator"></span>
+                                <span id="player-status-text">Black</span>
                             </span>
                         </div>
-                        <div class="info-item">
-                            <span class="info-label">Computer:</span>
-                            <span class="info-value">
-                                <span class="stone-indicator white-stone" id="computer-color-indicator"></span>
-                                <span id="computer-color-text">White</span>
+                        <div class="status-item">
+                            <span class="status-label">Captures</span>
+                            <span class="status-value">
+                                <span class="capture-pair">
+                                    <span class="stone-indicator black-stone"></span>
+                                    <span id="black-captures">0</span>
+                                </span>
+                                <span class="capture-pair">
+                                    <span class="stone-indicator white-stone"></span>
+                                    <span id="white-captures">0</span>
+                                </span>
                             </span>
                         </div>
-                        <div class="info-item">
-                            <span class="info-label">Game:</span>
-                            <span id="game-status" class="status-active">Active</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Moves:</span>
-                            <span id="move-count">0</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Last Move:</span>
-                            <span id="last-move">None</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Score:</span>
-                            <span id="score">-</span>
+                        <div class="status-item">
+                            <span class="status-label">Computer</span>
+                            <span class="status-value">
+                                <span class="stone-indicator white-stone" id="computer-status-indicator"></span>
+                                <span id="computer-status-text">White</span>
+                            </span>
                         </div>
                     </div>
                 </div>

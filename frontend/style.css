@@ -200,6 +200,17 @@ body {
     padding-bottom: 8px;
 }
 
+.sidebar-status {
+    justify-content: space-between;
+    margin-top: 8px;
+    padding: 12px 0;
+    width: 100%;
+}
+
+.sidebar-status .status-item {
+    padding: 0 8px;
+}
+
 .status-item {
     display: flex;
     flex-direction: column;
