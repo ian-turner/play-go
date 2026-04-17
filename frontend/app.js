@@ -41,7 +41,7 @@ class GoGame {
                 if (e.target.checked) {
                     this.playerColor = e.target.value;
                     this.computerColor = this.playerColor === 'black' ? 'white' : 'black';
-                    this.updatePlayerDisplay();
+                    this.updateUI();
                     if (this.gameActive) {
                         alert('Player color changed. Please start a new game.');
                     }
@@ -397,6 +397,8 @@ class GoGame {
         const actionsSection = document.getElementById('actions-section');
         const gameInfoSection = document.getElementById('game-info-section');
         
+        this.updatePlayerDisplay();
+        
         if (this.gameActive) {
             settingsSection.classList.add('hidden');
             actionsSection.classList.remove('hidden');
@@ -408,13 +410,15 @@ class GoGame {
         }
         
         // Update player/computer colors
-        const playerColorEl = document.getElementById('player-color');
-        playerColorEl.textContent = this.playerColor;
-        playerColorEl.className = `stone-indicator ${this.playerColor}-stone`;
+        const playerIndicator = document.getElementById('player-color-indicator');
+        const playerText = document.getElementById('player-color-text');
+        playerIndicator.className = `stone-indicator ${this.playerColor}-stone`;
+        playerText.textContent = this.playerColor.charAt(0).toUpperCase() + this.playerColor.slice(1);
         
-        const computerColorEl = document.getElementById('computer-color');
-        computerColorEl.textContent = this.computerColor;
-        computerColorEl.className = `stone-indicator ${this.computerColor}-stone`;
+        const computerIndicator = document.getElementById('computer-color-indicator');
+        const computerText = document.getElementById('computer-color-text');
+        computerIndicator.className = `stone-indicator ${this.computerColor}-stone`;
+        computerText.textContent = this.computerColor.charAt(0).toUpperCase() + this.computerColor.slice(1);
         
         // Update game status
         const gameStatus = document.getElementById('game-status');
