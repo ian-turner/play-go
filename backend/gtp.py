@@ -106,6 +106,19 @@ class GnuGoGTP:
         # lines[0] contains space-separated vertices
         vertices = lines[0].split()
         return vertices
+
+    def get_captures(self, color: str) -> int:
+        """Get number of stones captured by given color.
+        Returns integer count."""
+        lines = self.send_command(f'captures {color}')
+        if not lines:
+            return 0
+        # lines[0] should be like '= 5' or just '5'
+        # The _send_command strips the '=' prefix, so we get '5'
+        try:
+            return int(lines[0].strip())
+        except ValueError:
+            return 0
     
     def showboard(self) -> str:
         """Return board representation as string."""

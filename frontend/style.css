@@ -39,17 +39,24 @@ body {
     border: 1px solid #1e293b;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .board-header {
+    display: none;
+}
+
+.board-footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
+    margin: 12px auto 0;
+    padding: 12px 24px;
+    border-top: 1px solid #1e293b;
+    max-width: 600px;
+    width: 100%;
 }
 
 .form-group select {
@@ -188,9 +195,9 @@ body {
 .board-status {
     display: flex;
     justify-content: space-around;
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px solid #1e293b;
+    margin-top: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .status-item {
@@ -198,12 +205,32 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 4px;
+    padding: 0 16px;
 }
 
 .status-label {
     font-size: 0.8rem;
     color: #94a3b8;
     font-weight: 500;
+}
+
+.status-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e2e8f0;
+}
+
+.capture-pair {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.capture-pair:not(:last-child) {
+    margin-right: 12px;
 }
 
 .stone-indicator {
@@ -499,6 +526,14 @@ body {
     .dom-board {
         aspect-ratio: 1 / 1;
     }
+    
+    .board-footer {
+        padding: 10px 16px;
+    }
+    
+    .status-item {
+        padding: 0 12px;
+    }
 }
 
 .hidden {
@@ -520,5 +555,13 @@ body {
     
     .title-section h1 {
         font-size: 1.5rem;
+    }
+    
+    .board-footer {
+        padding: 8px 12px;
+    }
+    
+    .status-item {
+        padding: 0 8px;
     }
 }

@@ -10,6 +10,8 @@ class GoGame {
         this.gameActive = false;
         this.lastMove = null;
         this.moveCount = 0;
+        this.capturesBlack = 0;
+        this.capturesWhite = 0;
         this.intersections = new Map(); // Map of "x,y" -> intersection element
         this.stones = new Map(); // Map of "x,y" -> stone element
         
@@ -79,8 +81,9 @@ class GoGame {
             const line = document.createElement('div');
             line.className = 'grid-line vertical';
             line.style.left = `${(i + 1) * cellSize}px`;
+            line.style.top = `${cellSize}px`;
             line.style.width = '1px';
-            line.style.height = '100%';
+            line.style.height = `${(boardSize - 1) * cellSize}px`;
             gridContainer.appendChild(line);
         }
         
@@ -88,9 +91,10 @@ class GoGame {
         for (let i = 0; i < boardSize; i++) {
             const line = document.createElement('div');
             line.className = 'grid-line horizontal';
+            line.style.left = `${cellSize}px`;
             line.style.top = `${(i + 1) * cellSize}px`;
             line.style.height = '1px';
-            line.style.width = '100%';
+            line.style.width = `${(boardSize - 1) * cellSize}px`;
             gridContainer.appendChild(line);
         }
         
@@ -249,6 +253,8 @@ class GoGame {
             this.boardState = gameState.board_state;
             this.gameActive = !gameState.game_over;
             this.moveCount = gameState.move_count;
+            this.capturesBlack = gameState.captures_black || 0;
+            this.capturesWhite = gameState.captures_white || 0;
             
             this.drawBoard();
             this.updateUI();
@@ -283,6 +289,8 @@ class GoGame {
             this.boardState = result.game_state.board_state;
             this.gameActive = !result.game_state.game_over;
             this.moveCount = result.game_state.move_count;
+            this.capturesBlack = result.captures_black || 0;
+            this.capturesWhite = result.captures_white || 0;
             this.lastMove = vertex;
             
             this.drawBoard();
@@ -419,6 +427,21 @@ class GoGame {
         const computerText = document.getElementById('computer-color-text');
         computerIndicator.className = `stone-indicator ${this.computerColor}-stone`;
         computerText.textContent = this.computerColor.charAt(0).toUpperCase() + this.computerColor.slice(1);
+        
+        // Update board header status
+        const playerStatusIndicator = document.getElementById('player-status-indicator');
+        const playerStatusText = document.getElementById('player-status-text');
+        playerStatusIndicator.className = `stone-indicator ${this.playerColor}-stone`;
+        playerStatusText.textContent = this.playerColor.charAt(0).toUpperCase() + this.playerColor.slice(1);
+        
+        const computerStatusIndicator = document.getElementById('computer-status-indicator');
+        const computerStatusText = document.getElementById('computer-status-text');
+        computerStatusIndicator.className = `stone-indicator ${this.computerColor}-stone`;
+        computerStatusText.textContent = this.computerColor.charAt(0).toUpperCase() + this.computerColor.slice(1);
+        
+        // Update captures display
+        document.getElementById('black-captures').textContent = this.capturesBlack;
+        document.getElementById('white-captures').textContent = this.capturesWhite;
         
         // Update game status
         const gameStatus = document.getElementById('game-status');

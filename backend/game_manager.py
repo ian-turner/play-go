@@ -24,10 +24,17 @@ class GameSession:
         self.game_over = False
         self.result = None
         self.move_history = []
+        self.captures_black = 0
+        self.captures_white = 0
         
         # If player is white, computer makes first move
         if player_color == 'white':
             self._make_computer_move()
+    
+    def _update_captures(self) -> None:
+        """Update capture counts from engine."""
+        self.captures_black = self.engine.get_captures('black')
+        self.captures_white = self.engine.get_captures('white')
     
     def _make_computer_move(self) -> Optional[str]:
         """Generate computer move, update board, return vertex or None if game over."""
@@ -35,6 +42,7 @@ class GameSession:
             return None
         try:
             vertex = self.engine.genmove(self.computer_color)
+            self._update_captures()
         except Exception as e:
             logger.error(f"Error generating computer move: {e}")
             self.game_over = True
@@ -90,6 +98,7 @@ class GameSession:
         
         try:
             self.engine.play(self.player_color, vertex)
+            self._update_captures()
         except Exception as e:
             logger.error(f"Error playing move: {e}")
             return {'success': False, 'error': str(e)}
@@ -106,7 +115,9 @@ class GameSession:
                 'computer_move': None,
                 'board_state': board_state,
                 'game_over': True,
-                'result': self.result
+                'result': self.result,
+                'captures_black': self.captures_black,
+                'captures_white': self.captures_white
             }
         
         # Generate computer response if not pass? Actually even after pass, we might let computer pass.
@@ -130,7 +141,9 @@ class GameSession:
             'computer_move': computer_vertex,
             'board_state': board_state,
             'game_over': self.game_over,
-            'result': self.result
+            'result': self.result,
+            'captures_black': self.captures_black,
+            'captures_white': self.captures_white
         }
     
     def get_state(self) -> dict:
@@ -145,7 +158,9 @@ class GameSession:
             'board_state': board_state,
             'game_over': self.game_over,
             'result': self.result,
-            'move_count': len(self.move_history)
+            'move_count': len(self.move_history),
+            'captures_black': self.captures_black,
+            'captures_white': self.captures_white
         }
     
     def resign(self) -> None:
