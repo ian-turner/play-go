@@ -132,6 +132,34 @@ class GnuGoGTP:
             return ''
         return lines[0].strip()
     
+    def get_scoring(self) -> dict:
+        """
+        Get detailed scoring information after game ended.
+        
+        Returns dict with keys:
+        - score: final score string
+        - black_territory: list of vertices
+        - white_territory: list of vertices
+        - alive: list of vertices (stones alive)
+        - dead: list of vertices (dead stones)
+        - seki: list of vertices (seki stones)
+        """
+        # Ensure game is over? Not required but commands may fail.
+        result = {}
+        result['score'] = self.final_score()
+        for status in ['black_territory', 'white_territory', 'alive', 'dead', 'seki']:
+            try:
+                lines = self.send_command(f'final_status_list {status}')
+                # lines[0] contains space-separated vertices
+                if lines:
+                    vertices = lines[0].split()
+                else:
+                    vertices = []
+                result[status] = vertices
+            except Exception:
+                result[status] = []
+        return result
+    
     def set_boardsize(self, size: int) -> None:
         """Change board size (must be called before clear_board)."""
         self.send_command(f'boardsize {size}')

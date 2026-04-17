@@ -23,6 +23,7 @@ class GameSession:
         self.engine = GnuGoGTP(level=difficulty, boardsize=board_size, komi=komi)
         self.game_over = False
         self.result = None
+        self.scoring_data = None
         self.move_history = []
         self.captures_black = 0
         self.captures_white = 0
@@ -133,8 +134,10 @@ class GameSession:
             try:
                 score = self.engine.final_score()
                 self.result = f"Game ended. Score: {score}"
+                self.scoring_data = self.engine.get_scoring()
             except Exception:
                 self.result = "Game ended by two passes."
+                self.scoring_data = {}
         
         return {
             'success': True,
@@ -149,9 +152,10 @@ class GameSession:
     def get_state(self) -> dict:
         """Return current game state."""
         board_state = get_stone_lists(self.engine, self.board_size)
-        return {
+        state = {
             'game_id': self.game_id,
             'board_size': self.board_size,
+            'komi': self.komi,
             'difficulty': self.difficulty,
             'player_color': self.player_color,
             'computer_color': self.computer_color,
@@ -162,6 +166,9 @@ class GameSession:
             'captures_black': self.captures_black,
             'captures_white': self.captures_white
         }
+        if self.game_over and self.scoring_data is not None:
+            state['scoring'] = self.scoring_data
+        return state
     
     def resign(self) -> None:
         """Player resigns."""

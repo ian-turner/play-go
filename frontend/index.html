@@ -107,8 +107,38 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="control-section">
+                 
+                 <div class="control-section hidden" id="scoring-section">
+                     <h3><i class="fas fa-calculator"></i> Scoring</h3>
+                     <div class="scoring-breakdown">
+                         <div class="scoring-item">
+                             <span class="scoring-label">Final Score</span>
+                             <span class="scoring-value" id="scoring-score">B+0.0</span>
+                         </div>
+                         <div class="scoring-item">
+                             <span class="scoring-label">Black Territory</span>
+                             <span class="scoring-value" id="black-territory-count">0</span>
+                         </div>
+                         <div class="scoring-item">
+                             <span class="scoring-label">White Territory</span>
+                             <span class="scoring-value" id="white-territory-count">0</span>
+                         </div>
+                         <div class="scoring-item">
+                             <span class="scoring-label">Dead Stones</span>
+                             <span class="scoring-value" id="dead-stones-count">0</span>
+                         </div>
+                          <div class="scoring-item">
+                              <span class="scoring-label">Komi</span>
+                              <span class="scoring-value" id="scoring-komi">6.5</span>
+                          </div>
+                          <div class="scoring-item">
+                              <label class="scoring-label">Show Overlay</label>
+                              <input type="checkbox" id="scoring-overlay-toggle" checked>
+                          </div>
+                      </div>
+                 </div>
+                 
+                 <div class="control-section">
                     <h3><i class="fas fa-history"></i> Move Log</h3>
                     <div class="log-box" id="move-log">
                         <div class="log-entry">Game started</div>

@@ -3,6 +3,7 @@ class GoGame {
     constructor() {
         this.boardContainer = document.getElementById('go-board');
         this.boardSize = 19;
+        this.komi = 6.5;
         this.gameId = null;
         this.playerColor = 'black';
         this.computerColor = 'white';
@@ -12,8 +13,11 @@ class GoGame {
         this.moveCount = 0;
         this.capturesBlack = 0;
         this.capturesWhite = 0;
+        this.scoringData = null;
+        this.showOverlay = true;
         this.intersections = new Map(); // Map of "x,y" -> intersection element
         this.stones = new Map(); // Map of "x,y" -> stone element
+        this.overlays = new Map(); // Map of "x,y" -> overlay element
         
         this.setupEventListeners();
         this.createBoardGrid();
@@ -59,6 +63,10 @@ class GoGame {
         
         // Resign button
         document.getElementById('resign-btn').addEventListener('click', () => this.resignGame());
+        // Scoring overlay toggle
+        document.getElementById('scoring-overlay-toggle').addEventListener('change', (e) => {
+            this.toggleOverlay(e.target.checked);
+        });
     }
     
     // Create DOM board grid with intersections
@@ -255,6 +263,8 @@ class GoGame {
             this.moveCount = gameState.move_count;
             this.capturesBlack = gameState.captures_black || 0;
             this.capturesWhite = gameState.captures_white || 0;
+            this.scoringData = gameState.scoring || null;
+            this.komi = gameState.komi || 6.5;
             
             this.drawBoard();
             this.updateUI();
@@ -289,6 +299,7 @@ class GoGame {
             this.boardState = result.game_state.board_state;
             this.gameActive = !result.game_state.game_over;
             this.moveCount = result.game_state.move_count;
+            this.scoringData = result.game_state.scoring || null;
             this.capturesBlack = result.captures_black || 0;
             this.capturesWhite = result.captures_white || 0;
             this.lastMove = vertex;
@@ -375,6 +386,11 @@ class GoGame {
                 }
             }
         }
+
+        this.clearOverlays();
+        if (this.scoringData && !this.gameActive) {
+            this.drawScoringOverlay();
+        }
     }
     
     drawStone(x, y, color) {
@@ -399,11 +415,72 @@ class GoGame {
         this.stones.set(`${x},${y}`, stone);
     }
     
+    clearOverlays() {
+        this.overlays.forEach(overlay => overlay.remove());
+        this.overlays.clear();
+    }
+
+    drawScoringOverlay() {
+        if (!this.scoringData || !this.showOverlay) return;
+        const sd = this.scoringData;
+        const territoryBlack = sd.black_territory || [];
+        const territoryWhite = sd.white_territory || [];
+        const dead = sd.dead || [];
+        const seki = sd.seki || [];
+        const alive = sd.alive || [];
+
+        territoryBlack.forEach(vertex => {
+            const pos = this.vertexToBoard(vertex);
+            if (pos) this.drawOverlay(pos.x, pos.y, 'territory-black');
+        });
+        territoryWhite.forEach(vertex => {
+            const pos = this.vertexToBoard(vertex);
+            if (pos) this.drawOverlay(pos.x, pos.y, 'territory-white');
+        });
+        dead.forEach(vertex => {
+            const pos = this.vertexToBoard(vertex);
+            if (pos) this.drawOverlay(pos.x, pos.y, 'dead');
+        });
+        seki.forEach(vertex => {
+            const pos = this.vertexToBoard(vertex);
+            if (pos) this.drawOverlay(pos.x, pos.y, 'seki');
+        });
+    }
+
+    drawOverlay(x, y, type) {
+        const intersection = this.intersections.get(`${x},${y}`);
+        if (!intersection) return;
+        const overlay = document.createElement('div');
+        overlay.className = `scoring-overlay ${type}`;
+        overlay.style.left = intersection.style.left;
+        overlay.style.top = intersection.style.top;
+        if (type === 'dead') {
+            overlay.style.width = `${this.cellSize * 0.5}px`;
+            overlay.style.height = `${this.cellSize * 0.5}px`;
+        } else {
+            overlay.style.width = `${this.cellSize * 0.7}px`;
+            overlay.style.height = `${this.cellSize * 0.7}px`;
+        }
+        this.boardContainer.appendChild(overlay);
+        this.overlays.set(`${x},${y}`, overlay);
+    }
+    
+    toggleOverlay(show) {
+        this.showOverlay = show;
+        if (this.scoringData && !this.gameActive) {
+            this.clearOverlays();
+            if (show) {
+                this.drawScoringOverlay();
+            }
+        }
+    }
+
     updateUI() {
         // Toggle sidebar sections based on game state and game existence
         const settingsSection = document.getElementById('settings-section');
         const actionsSection = document.getElementById('actions-section');
         const gameStatusSection = document.getElementById('game-status-section');
+        const scoringSection = document.getElementById('scoring-section');
         // Game status section shows when a game exists (gameId not null)
         
         this.updatePlayerDisplay();
@@ -420,6 +497,13 @@ class GoGame {
             gameStatusSection.classList.remove('hidden');
         } else {
             gameStatusSection.classList.add('hidden');
+        }
+
+        if (this.scoringData && !this.gameActive) {
+            scoringSection.classList.remove('hidden');
+            this.updateScoringDisplay();
+        } else {
+            scoringSection.classList.add('hidden');
         }
         
 
@@ -444,6 +528,17 @@ class GoGame {
         // Enable/disable buttons
         document.getElementById('pass-btn').disabled = !this.gameActive;
         document.getElementById('resign-btn').disabled = !this.gameActive;
+    }
+    
+    updateScoringDisplay() {
+        if (!this.scoringData) return;
+        const sd = this.scoringData;
+        document.getElementById('scoring-score').textContent = sd.score || '';
+        document.getElementById('black-territory-count').textContent = sd.black_territory ? sd.black_territory.length : 0;
+        document.getElementById('white-territory-count').textContent = sd.white_territory ? sd.white_territory.length : 0;
+        const deadCount = sd.dead ? sd.dead.length : 0;
+        document.getElementById('dead-stones-count').textContent = deadCount;
+        document.getElementById('scoring-komi').textContent = this.komi;
     }
     
     addLogEntry(message) {

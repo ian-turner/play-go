@@ -547,6 +547,70 @@ body {
     }
 }
 
+.scoring-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 12px 0;
+    width: 100%;
+}
+
+.scoring-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #334155;
+}
+
+.scoring-item:last-child {
+    border-bottom: none;
+}
+
+.scoring-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.scoring-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e2e8f0;
+}
+
+#scoring-overlay-toggle {
+    margin-left: 8px;
+}
+
+.scoring-overlay {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    opacity: 0.3;
+    border-radius: 50%;
+}
+
+.scoring-overlay.territory-black {
+    background-color: rgba(0, 0, 255, 0.3);
+}
+
+.scoring-overlay.territory-white {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.scoring-overlay.dead {
+    background-color: rgba(255, 0, 0, 0.5);
+    border: 2px solid #ff0000;
+    border-radius: 0;
+    opacity: 0.5;
+}
+
+.scoring-overlay.seki {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
 .hidden {
     display: none !important;
 }
