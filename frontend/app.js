@@ -97,6 +97,7 @@ class GoGame {
         this.boardContainer.appendChild(gridContainer);
         
         // Create intersections
+        const intersectionSize = cellSize * 0.9;
         for (let x = 0; x < boardSize; x++) {
             for (let y = 0; y < boardSize; y++) {
                 const intersection = document.createElement('div');
@@ -105,6 +106,8 @@ class GoGame {
                 intersection.dataset.y = y;
                 intersection.style.left = `${(x + 1) * cellSize}px`;
                 intersection.style.top = `${(y + 1) * cellSize}px`;
+                intersection.style.width = `${intersectionSize}px`;
+                intersection.style.height = `${intersectionSize}px`;
                 
                 intersection.addEventListener('click', (e) => this.handleIntersectionClick(e));
                 this.boardContainer.appendChild(intersection);
@@ -114,11 +117,15 @@ class GoGame {
         
         // Create star points
         const starPoints = this.getStarPoints();
+        const starSize = cellSize * 0.1;
         starPoints.forEach(point => {
             const star = document.createElement('div');
             star.className = 'star-point';
             star.style.left = `${(point.x + 1) * cellSize}px`;
             star.style.top = `${(point.y + 1) * cellSize}px`;
+            star.style.width = `${starSize}px`;
+            star.style.height = `${starSize}px`;
+            star.style.borderRadius = '50%';
             this.boardContainer.appendChild(star);
         });
         
@@ -374,6 +381,11 @@ class GoGame {
         // Position stone at intersection center
         stone.style.left = intersection.style.left;
         stone.style.top = intersection.style.top;
+        
+        // Size stone proportionally to cell size
+        const diameter = this.cellSize * 0.85;
+        stone.style.width = `${diameter}px`;
+        stone.style.height = `${diameter}px`;
         
         this.boardContainer.appendChild(stone);
         this.stones.set(`${x},${y}`, stone);
